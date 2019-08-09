@@ -3,7 +3,7 @@
   "namespace": "default",
   "schedule": "* * * * *",
   "threshold_hours": "5",
-  "dry_run": "true",
-  "group": "gerald1248",
-  "apps": "worldfirstplatform:company worldfirstplatform:registration"
+  "dry_run": "false",
+  "apps": "worldfirstplatform:company worldfirstplatform:registration",
+  "group": "gerald1248"
 }

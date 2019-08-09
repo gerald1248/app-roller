@@ -28,7 +28,8 @@ for app in ${APPS}; do
     fi
   done
   if [ ! -z "${redeploy}" ]; then
-    echo "Trigger redeployment of deployment ${app}"
+    echo "=> Pod(s) older than ${THRESHOLD_HOURS}h"
+    echo "=> trigger redeployment of ${appLabel}"
     # from k8s 1.15, call kubectl rollout restart
     if [ "${DRY_RUN}" = "true" ]; then
       echo "[Skipped as DRY_RUN set to true]"
