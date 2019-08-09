@@ -1,0 +1,13 @@
+apiVersion: v1
+name: app-roller
+version: 0.1.0
+description: "app roller"
+icon: "https://docs.helm.sh/src/img/helm-logo.svg"
+keywords:
+  - kubernetes
+home: https://github.com/gerald1248/app-roller
+sources:
+  - https://github.com/gerald1248/app-roller
+maintainers:
+  - name: gerald1248
+    email: gerald1248@gmail.com

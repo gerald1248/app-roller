@@ -1,0 +1,52 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: {{ .Values.name | quote }}
+  namespace: {{ .Values.namespace | quote }}
+  labels:
+    app: {{ .Values.name | quote }}
+spec:
+  schedule: {{ .Values.schedule | quote }}
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            app: {{ .Values.name | quote }}
+        spec:
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+            fsGroup: 1000
+          serviceAccount: {{ .Values.name | quote }}
+          containers:
+          - name: {{ .Values.name | quote }}
+            image: gerald1248/app-roller:latest
+            command: [ "app-roller" ]
+            args: [ ]
+            resources:
+              limits:
+                cpu: 200m
+                memory: 1Gi
+              requests:
+                cpu: 100m
+                memory: 512Mi
+            livenessProbe:
+              exec:
+                command:
+                - date
+              initialDelaySeconds: 20
+              periodSeconds: 10
+            readinessProbe:
+              exec:
+                command:
+                - date
+              initialDelaySeconds: 20
+              periodSeconds: 20
+            env:
+            - name: APPS
+              value: {{ .Values.apps }}
+            - name: THRESHOLD_HOURS
+              values: {{ .Values.threshold_hours }}
