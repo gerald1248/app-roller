@@ -48,8 +48,8 @@ spec:
               periodSeconds: 10
             env:
             - name: APPS
-              value: {{ .Values.apps }}
+              value: {{ .Values.apps | quote }}
             - name: THRESHOLD_HOURS
-              value: {{ .Values.threshold_hours }}
+              value: {{ .Values.threshold_hours | quote }}
             - name: DRY_RUN
-              value: {{ .Values.dry_run }}
+              value: {{ .Values.dry_run | quote }}
