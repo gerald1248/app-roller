@@ -31,7 +31,7 @@ spec:
         resources: {}
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
-        command: [ "while true; do sleep 60; done" ] 
+        command: [ "sh", "-c", "while true; do sleep 60; done" ] 
         args: []
         resources:
           limits:
