@@ -3,6 +3,7 @@
 if [ -z "${APPS}" ] || [ -z "${THRESHOLD_HOURS}"]; then
   echo "Set environment variables APPS and THRESHOLD_HOURS"
   echo "APPS takes form 'NAMESPACE:APPLABEL1 NAMESPACE:APPLABEL2'"
+  echo "APPS='${APPS}' THRESHOLD_HOURS='${THRESHOLD_HOURS}'"
   exit 0
 fi
 

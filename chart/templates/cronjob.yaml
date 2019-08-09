@@ -16,6 +16,7 @@ spec:
           labels:
             app: {{ .Values.name | quote }}
         spec:
+          restartPolicy: Never
           securityContext:
             runAsUser: 1000
             runAsGroup: 1000
@@ -37,18 +38,18 @@ spec:
               exec:
                 command:
                 - date
-              initialDelaySeconds: 20
+              initialDelaySeconds: 10
               periodSeconds: 10
             readinessProbe:
               exec:
                 command:
                 - date
-              initialDelaySeconds: 20
-              periodSeconds: 20
+              initialDelaySeconds: 10
+              periodSeconds: 10
             env:
             - name: APPS
               value: {{ .Values.apps }}
             - name: THRESHOLD_HOURS
-              values: {{ .Values.threshold_hours }}
+              value: {{ .Values.threshold_hours }}
             - name: DRY_RUN
-              values: {{ .Values.dry_run }}
+              value: {{ .Values.dry_run }}

@@ -1,9 +1,9 @@
 {
   "name": "app-roller",
   "namespace": "default",
-  "schedule": "0 * * * *",
+  "schedule": "* * * * *",
   "threshold_hours": "5",
   "dry_run": "true",
   "group": "gerald1248",
-  "apps": ""
+  "apps": "worldfirstplatform:company worldfirstplatform:registration"
 }
