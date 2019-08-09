@@ -7,7 +7,7 @@ if [ -z "${APPS}" ] || [ -z "${THRESHOLD_HOURS}"]; then
   exit 0
 fi
 
-cutoffSeconds=$(date -d'now -${THRESHOLD_HOURS} hours' "+%s")
+cutoffSeconds=$(date -d"now -${THRESHOLD_HOURS} hours" "+%s")
 for app in ${APPS}; do
   redeploy=""
   namespace=$(echo "${app}" | cut -d':' -f1)
