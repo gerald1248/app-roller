@@ -1,7 +1,6 @@
 {
   "name": "app-roller",
   "namespace": "default",
-  "group": "gerald1248",
   "schedule": "0 * * * *",
   "threshold_hours": "5",
   "apps":"hello-world farewell-world"
