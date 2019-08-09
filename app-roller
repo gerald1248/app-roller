@@ -1,14 +1,23 @@
 #!/usr/bin/env bash
 
 if [ -z "${APPS}" ] || [ -z "${THRESHOLD_HOURS}"]; then
-  echo "set environment variables APPS and THRESHOLD_HOURS"
+  echo "Set environment variables APPS and THRESHOLD_HOURS"
+  echo "APPS takes form 'NAMESPACE:APPLABEL1 NAMESPACE:APPLABEL2'"
   exit 0
 fi
 
 cutoffSeconds=$(date -d'now -${THRESHOLD_HOURS} hours' "+%s")
 for app in ${APPS}; do
   redeploy=""
-  creationTimestamps=$(kubectl get po --all-namespaces -l app=${app} -o jsonpath="{.items[*].metadata.creationTimestamp}")
+  namespace=$(echo "${app}" | cut -d':' -f1)
+  appLabel=$(echo "${app}" | cut -d':' -f2)
+
+  if [ -z "${namespace}" ] || [ -z "${appLabel}" ]; then
+    echo "Malformed item in APPS environment variable; must take form 'NAMESPACE:APPLABEL'"
+    continue
+  fi
+  
+  creationTimestamps=$(kubectl get po -n="${namespace}" -l app="${appLabel}" -o jsonpath="{.items[*].metadata.creationTimestamp}")
   for creationTimestamp in ${creationTimestamps}; do
     creationSeconds=$(date -d'${creationTimestamp}' "+%s")
     if ["${creationSeconds}" -lt "${cutoffSeconds}"]; then
@@ -18,6 +27,6 @@ for app in ${APPS}; do
   if [ ! -z ${redeploy} ]; then
     echo "Trigger redeployment of deployment ${app}"
     # from k8s 1.15, call kubectl rollout restart
-    kubectl patch deployment ${app} -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"restarted\":\"$(date +%s)\"}}}}}" || true
+    kubectl patch deployment "${app}" -n "${namespace}" -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"restarted\":\"$(date +%s)\"}}}}}" || true
   fi
 done
