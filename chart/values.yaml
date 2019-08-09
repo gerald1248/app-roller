@@ -3,6 +3,7 @@
   "namespace": "default",
   "schedule": "0 * * * *",
   "threshold_hours": "5",
+  "dry_run": "true",
   "group": "gerald1248",
   "apps": ""
 }

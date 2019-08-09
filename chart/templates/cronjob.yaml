@@ -50,3 +50,5 @@ spec:
               value: {{ .Values.apps }}
             - name: THRESHOLD_HOURS
               values: {{ .Values.threshold_hours }}
+            - name: DRY_RUN
+              values: {{ .Values.dry_run }}

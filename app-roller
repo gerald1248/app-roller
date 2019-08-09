@@ -16,6 +16,8 @@ for app in ${APPS}; do
     echo "Malformed item in APPS environment variable; must take form 'NAMESPACE:APPLABEL'"
     continue
   fi
+
+  echo "Checking deployment ${appLabel} in namespace ${namespace}"
   
   creationTimestamps=$(kubectl get po -n="${namespace}" -l app="${appLabel}" -o jsonpath="{.items[*].metadata.creationTimestamp}")
   for creationTimestamp in ${creationTimestamps}; do
@@ -24,9 +26,13 @@ for app in ${APPS}; do
       redeploy="${redeploy}."
     fi
   done
-  if [ ! -z ${redeploy} ]; then
+  if [ ! -z "${redeploy}" ]; then
     echo "Trigger redeployment of deployment ${app}"
     # from k8s 1.15, call kubectl rollout restart
-    kubectl patch deployment "${app}" -n "${namespace}" -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"restarted\":\"$(date +%s)\"}}}}}" || true
+    if [ "${DRY_RUN}" = "true" ]; then
+      echo "[Skipped as DRY_RUN set to true]"
+    else
+      kubectl patch deployment "${app}" -n "${namespace}" -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"restarted\":\"$(date +%s)\"}}}}}" || true
+    fi
   fi
 done
