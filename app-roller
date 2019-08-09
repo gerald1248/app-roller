@@ -29,12 +29,12 @@ for app in ${APPS}; do
   done
   if [ ! -z "${redeploy}" ]; then
     echo "=> Pod(s) older than ${THRESHOLD_HOURS}h"
-    echo "=> trigger redeployment of ${appLabel}"
+    echo "=> Trigger redeployment of ${appLabel}"
     # from k8s 1.15, call kubectl rollout restart
     if [ "${DRY_RUN}" = "true" ]; then
       echo "[Skipped as DRY_RUN set to true]"
     else
-      kubectl patch deployment "${app}" -n "${namespace}" -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"restarted\":\"$(date +%s)\"}}}}}" || true
+      kubectl patch deployment "${appLabel}" -n "${namespace}" -p "{\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"restarted\":\"$(date +%s)\"}}}}}" || true
     fi
   fi
 done
