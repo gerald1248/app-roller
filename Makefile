@@ -6,11 +6,10 @@ K := $(foreach exec,$(EXECUTABLES),\
 # fetch name and namespace
 NAME = $(shell jq -r .name chart/values.yaml)
 NAMESPACE = $(shell jq -r .namespace chart/values.yaml)
-GROUP = $(shell jq -r .group chart/values.yaml)
 
 # targets
 build:
 	docker build -t $(NAME) .
 push:
-	docker tag $(NAME) $(GROUP)/$(NAME):latest
-	docker push $(GROUP)/$(NAME):latest
+	docker tag $(NAME) gerald1248/$(NAME):latest
+	docker push gerald1248/$(NAME):latest
