@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
 if [ -z "${APPS}" ] || [ -z "${THRESHOLD_HOURS}"]; then
-  echo "environment variable APPS not set"
-  exit 1
+  echo "set environment variables APPS and THRESHOLD_HOURS"
+  exit 0
 fi
 
 cutoffSeconds=$(date -d'now -${THRESHOLD_HOURS} hours' "+%s")
