@@ -1,8 +1,9 @@
 {
   "name": "app-roller",
   "namespace": "default",
-  "schedule": "* * * * *",
-  "threshold_hours": "5",
+  "schedule": "0 * * * *",
+  "apps": "default:sample",
+  "threshold_hours": "2",
   "dry_run": "false",
-  "apps": "default:myapp1 default:myapp2"
+  "sample_deployment": "true"
 }
