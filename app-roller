@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-if [ -z "${APPS}" ] || [ -z "${THRESHOLD_HOURS}"]; then
+if [ -z "${APPS}" ] || [ -z "${THRESHOLD_HOURS}" ]; then
   echo "Set environment variables APPS and THRESHOLD_HOURS"
   echo "APPS takes form 'NAMESPACE:APPLABEL1 NAMESPACE:APPLABEL2'"
   echo "APPS='${APPS}' THRESHOLD_HOURS='${THRESHOLD_HOURS}'"
@@ -22,7 +22,7 @@ for app in ${APPS}; do
   
   creationTimestamps=$(kubectl get po -n="${namespace}" -l app="${appLabel}" -o jsonpath="{.items[*].metadata.creationTimestamp}")
   for creationTimestamp in ${creationTimestamps}; do
-    creationSeconds=$(date -d'${creationTimestamp}' "+%s")
+    creationSeconds=$(date -d"${creationTimestamp}" "+%s")
     if ["${creationSeconds}" -lt "${cutoffSeconds}"]; then
       redeploy="${redeploy}."
     fi
