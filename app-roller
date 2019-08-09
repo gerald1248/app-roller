@@ -23,7 +23,7 @@ for app in ${APPS}; do
   creationTimestamps=$(kubectl get po -n="${namespace}" -l app="${appLabel}" -o jsonpath="{.items[*].metadata.creationTimestamp}")
   for creationTimestamp in ${creationTimestamps}; do
     creationSeconds=$(date -d"${creationTimestamp}" "+%s")
-    if ["${creationSeconds}" -lt "${cutoffSeconds}"]; then
+    if [ "${creationSeconds}" -lt "${cutoffSeconds}" ]; then
       redeploy="${redeploy}."
     fi
   done
